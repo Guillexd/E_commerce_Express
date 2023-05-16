@@ -1,0 +1,23 @@
+{{#if product}}
+<h1>Product: {{product.title}}</h1>
+  <section class="card text-center col-md-8 col-lg-6 col-xl-4">
+    <div class="card-body">
+      <h5 class="card-title">{{product.title}}</h5>
+      <p class="card-text">Description: {{product.des}}</p>
+      <p class="card-text">Price: {{product.price}}</p>
+      <p class="card-text"><small class="text-muted">Category: {{product.category}}</small></p>
+      <p class="card-text"><small class="text-muted">Stock: {{product.stock}}</small></p>
+      {{#if product.status}}
+        <p class="card-text"><small class="text-muted">Available</small></p>
+        {{#if isntAllowed}}
+          <h4>Quantity: </h4> <input type="number" class="form-control my-2" name="quantity" value="1">
+          <a href="#" class="btn btn-primary btn-lg product_to_cart_button" data-id='{{product._id}}'>Add to Cart</a>
+        {{/if}}
+        {{else}}
+        <p class="card-text"><small class="text-muted">Not available</small></p>
+      {{/if}}
+    </div>
+    <img src='/uploads/{{product.thumbnail}}' class="card-img-bottom" alt='{{product.title}}' width="100%">
+    <a class="btn btn-secondary" href="/api/products">Back to products</a>
+  </section>
+{{/if}}

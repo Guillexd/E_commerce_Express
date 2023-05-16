@@ -1,0 +1,39 @@
+{{#if ticket}}
+  <h1>Ticket {{ticket._id}}</h1>
+  <h3>Purchaser: {{ticket.purchaser}}</h3>
+  <h4>Code: {{ticket.code}}</h4>
+  <span>Amount: {{ticket.amount}}</span>
+  <span>Date: {{ticket.purchase_datetime}}</span>
+  {{#if products}}
+    <h2>Failed purchases!!!</h2>
+    <i class="fa-sharp fa-solid fa-arrow-down-long fa-beat fa-2xl my-4"></i>
+    {{#each products}}
+      <section class="card" style="width: 18rem;">
+        <a href="/api/products/{{_id._id}}"><img
+            src="{{_id.thumbnail}}"
+            class="card-img-top"
+            alt="{{_id.title}}"
+            height="200px"
+            width="150px"
+          /></a>
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{_id.title}}</h5>
+          <span class="card-text">{{_id.des}}</span>
+          <span class="card-text">${{_id.price}}</span>
+          <span class="card-text">Category: {{_id.category}}</span>
+          {{#if _id.status}}
+            <a
+              href="/api/products/{{_id._id}}"
+              class="btn btn-primary product_to_cart_button"
+            >watch product</a>
+          {{else}}
+            <a
+              href="/api/products/{{_id._id}}"
+              class="btn btn-primary disabled"
+            >Watch product</a>
+          {{/if}}
+        </div>
+      </section>
+    {{/each}}
+  {{/if}}
+{{/if}}

@@ -1,0 +1,27 @@
+<h1>Add new product</h1>
+<section class="card text-center px-5 col-md-8 col-lg-6 col-xl-4">
+    <form id="form_submit_to_add_product" enctype="multipart/form-data">
+        <div class="card-body">
+            <h5 class="card-title">Title:
+                <input type="text" class="form-control" name="title" />
+            </h5>
+            <p class="card-text">Description:
+                <input type="text" class="form-control" name="des" />
+            </p>
+            <p class="card-text">Price:
+                <input type="text" class="form-control" name="price" />
+            </p>
+            <p class="card-text">Category:
+                <input type="text" class="form-control" name="category" />
+            </p>
+            <p class="card-text">Stock:
+                <input type="number" class="form-control" name="stock" />
+            </p>
+        </div>
+        Thumbnail:
+        <input id="image" type="file" class="form-control" name="thumbnail" accept="image/*"/>
+        <img id="renderImage" src="">
+        <button type="submit" class="btn btn-primary mt-2">Add product</button>
+    </form>
+    <a class="btn btn-secondary m-5" href="/api/products">Back to products</a>
+</section>

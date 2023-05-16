@@ -1,0 +1,147 @@
+<div id="buttons__shop">
+  <button
+    class="btn btn-primary d-inline-block text-left"
+    onclick="location.href='/user/logout'"
+  >logout</button>
+  {{#if isPremiun}}
+    <i id="shopping__car" class="fa-solid fa-cart-shopping my-2"></i>
+    <button
+      class="btn btn-success"
+      onclick="location.href='/view/nodemailer'"
+    >Send an email</button>
+    <a style="z-index: 990;" class="btn btn-success mt-2" href="/user/premiun/{{user._id}}">Change role: {{user.rol}}</a>
+  {{/if}}
+  {{#if isAllowed}}{{else}}
+    <i id="shopping__car" class="fa-solid fa-cart-shopping my-2"></i>
+    <button
+      class="btn btn-success"
+      onclick="location.href='/view/nodemailer'"
+    >Send an email</button>
+    <a style="z-index: 990;" class="btn btn-success mt-2" href="/user/premiun/{{user._id}}">Change role: {{user.rol}}</a>
+  {{/if}}
+</div>
+
+<h1 class="text-center">Products</h1>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    {{#if products.prevLink}}
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="/api/products?{{products.prevLink}}"
+          aria-label="Previous"
+        >
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+    {{/if}}
+    <li class="page-item"><a
+        class="page-link"
+        href="#"
+      >{{products.page}}</a></li>
+    {{#if products.nextLink}}
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="/api/products?{{products.nextLink}}"
+          aria-label="Next"
+        >
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    {{/if}}
+  </ul>
+</nav>
+
+<div class="container mt-5 d-flex flex-wrap gap-2 justify-content-center">
+  {{#if mocking}}
+    {{#each products}}
+      <section class="card" style="width: 18rem;">
+        <img
+            src="{{thumbnail}}"
+            class="card-img-top"
+            alt="{{title}}"
+            width="100%"
+          />
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{title}}</h5>
+          <span class="card-text">{{description}}</span>
+          <span class="card-text">${{price}}</span>
+          <span class="card-text">Category: {{category}}</span>
+          {{#if status}}
+            {{#if isAllowed}}{{else}}
+              <a
+                class="btn btn-primary"
+              >watch product</a>
+            {{/if}}
+          {{else}}
+            {{#if isAllowed}}{{else}}
+              <a
+                class="btn btn-primary disabled"
+              >Watch product</a>
+            {{/if}}
+          {{/if}}
+        </div>
+      </section>
+    {{/each}}
+  {{else}}
+    {{#each products.payload}}
+      <section class="card" style="width: 18rem;">
+        <a href="/api/products/{{_id}}"><img
+            src="/uploads/{{thumbnail}}"
+            class="card-img-top"
+            alt="{{title}}"
+            width="100%"
+          /></a>
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{title}}</h5>
+          <span class="card-text">{{des}}</span>
+          <span class="card-text">${{price}}</span>
+          <span class="card-text">Category: {{category}}</span>
+          {{#if status}}
+            {{#if isAllowed}}
+              {{#if isPremiun}}
+                <a href="/api/products/{{_id}}" class="btn btn-primary product_to_cart_button">watch product</a>
+              {{/if}}
+            {{else}}
+              <a
+                href="/api/products/{{_id}}"
+                class="btn btn-primary product_to_cart_button"
+              >watch product</a>
+            {{/if}}
+          {{else}}
+            {{#if isAllowed}}
+              {{#if isPremiun}}
+                <a href="/api/products/{{_id}}" class="btn btn-primary product_to_cart_button">watch product</a>
+              {{/if}}
+            {{else}}
+              <a
+                href="/api/products/{{_id}}"
+                class="btn btn-primary disabled"
+              >Watch product</a>
+            {{/if}}
+          {{/if}}
+          {{#if isAllowed}}
+            <a
+              href="#"
+              class="btn btn-primary edit_product my-1"
+              data-id="{{_id}}"
+            >Edit Product</a>
+            <a
+              href="#"
+              class="btn btn-primary delete_product"
+              data-id="{{_id}}"
+            >Delete Product</a>
+          {{/if}}
+        </div>
+      </section>
+    {{/each}}
+  {{/if}}
+  {{#if isAllowed}}
+    <button
+      class="btn btn-secondary add_product"
+      style="width: 18rem; height: 451px;"
+    >Add Product</button>
+  {{/if}}
+</div>

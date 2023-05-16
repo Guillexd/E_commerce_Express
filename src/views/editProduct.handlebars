@@ -1,0 +1,30 @@
+{{#if product}}
+<h1>Product: {{product.title}}</h1>
+<section class="card text-center col-md-8 col-lg-6 col-xl-4">
+    <form id="form_submit_to_update_product" data-id="{{product.id}}" enctype="multipart/form-data">
+        <div class="card-body">
+            <h5 class="card-title">Title:
+                <input type="text" class="form-control" name="title" value="{{product.title}}" />
+            </h5>
+            <p class="card-text">Description:
+                <input type="text" class="form-control" name="des" value="{{product.des}}" />
+            </p>
+            <p class="card-text">Price:
+                <input type="text" class="form-control" name="price" value="{{product.price}}" />
+            </p>
+            <p class="card-text">Category:
+                <input type="text" class="form-control" name="category" value="{{product.category}}" />
+            </p>
+            <p class="card-text">Stock:
+                <input type="number" class="form-control" name="stock" value="{{product.stock}}" />
+            </p>
+        </div>
+        <img src="/uploads/{{product.thumbnail}}" class="card-img-bottom" alt="{{product.title}}" width="100%" />
+        Thumbnail:
+        <input id="image" type="file" class="form-control" name="thumbnail" value="{{product.thumbnail}}" />
+        <img id="renderImage" src="">
+        <button type="submit" class="btn btn-primary mt-2">Update product</button>
+    </form>
+    <a class="btn btn-secondary mt-2" href="/api/products">Back to products</a>
+</section>
+{{/if}}

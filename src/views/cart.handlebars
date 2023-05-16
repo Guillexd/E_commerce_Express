@@ -1,0 +1,47 @@
+<div id="buttons__shop">
+  <button
+    class="btn btn-primary d-inline-block text-left w-100"
+    onclick="location.href='/api/products'"
+  >go to products</button>
+  <button
+    class="btn btn-secondary d-inline-block text-left w-100 mt-1"
+    onclick="location.href='/user/logout'"
+  >logout</button>
+</div>
+{{#if cart}}
+  <div class="container">
+    <h1 class="text-center">Your cart </h1>
+    <p>Fecha: {{cart.time}}</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Price</th>
+          <th scope="col">Category</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each cart.products}}
+          <tr>
+            <th scope="row">{{_id.title}}</th>
+            <td>{{_id.des}}</td>
+            <td>${{_id.price}}</td>
+            <td>{{_id.category}}</td>
+            <td>{{quantity}}</td>
+            <td>
+              <button class="btn btn-danger remove_product_from_cart" data-id="{{_id._id}}">Delete</button>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    {{#if isntAdmin}}
+      {{#if cart.products}}
+        <button class="btn btn-outline-primary btn-lg w-100 purchase_boton">Finish purchase</button>
+      {{/if}}
+    {{/if}}
+  </div>
+{{/if}}
