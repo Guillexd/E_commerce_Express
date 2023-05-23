@@ -76,8 +76,8 @@ export default class UserRepository {
     return userChanged;
   }
 
-  async changeRole(id) {
-    const user = await this.dao.changeRole(id);
+  async getUserPremiunById(id) {
+    const user = await this.dao.getUserPremiunById(id);
     const userChanged = userResponse(user);
     return userChanged;
   }

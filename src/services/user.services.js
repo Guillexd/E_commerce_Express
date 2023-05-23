@@ -20,7 +20,7 @@ export async function changePassword(email, oldPassword, newPassword) {
   return newUser;
 }
 
-export async function changeRole(id) {
-  const newUser = await userDao.changeRole(id);
+export async function getUserPremiunById(id) {
+  const newUser = await userDao.getUserPremiunById(id);
   return newUser;
 }

@@ -23,6 +23,10 @@ import { generateLogger } from "./middleware/winston.middleware.js";
 import logger from "./utils/winston.js";
 import { errorMiddleware } from "./middleware/errors.middleware.js";
 
+//swagger documentation
+import { swaggerSetup } from "./swaggerSpecs.js";
+import swaggerUi from "swagger-ui-express";
+
 const server = express();
 
 server.use(generateLogger);
@@ -86,11 +90,29 @@ server.get("/loggerTest", (req, res) => {
   res.send("Log from winston");
 });
 
+server.use(
+  "/api/docs",
+  passport.authenticate("current", {
+    session: false,
+    failureRedirect: "/view/error",
+  }),
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSetup)
+);
+
 //Endpoints
-server.get("*", (req, res) => res.render("error404", {css: "error", js: "error"}));
-server.post("*", (req, res) => res.render("error404", {css: "error", js: "error"}));
-server.put("*", (req, res) => res.render("error404", {css: "error", js: "error"}));
-server.delete("*", (req, res) => res.render("error404", {css: "error", js: "error"}));
+server.get("*", (req, res) =>
+  res.render("error404", { css: "error", js: "error" })
+);
+server.post("*", (req, res) =>
+  res.render("error404", { css: "error", js: "error" })
+);
+server.put("*", (req, res) =>
+  res.render("error404", { css: "error", js: "error" })
+);
+server.delete("*", (req, res) =>
+  res.render("error404", { css: "error", js: "error" })
+);
 
 server.use(errorMiddleware);
 

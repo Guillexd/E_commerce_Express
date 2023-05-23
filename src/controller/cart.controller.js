@@ -18,7 +18,13 @@ import logger from "../utils/winston.js";
 export async function getOneCartById(req, res) {
   const { idCart } = req.params;
   try {
-    if (req.isAdmin) throw new Error("You can't do this");
+    if (req.isAdmin) {
+      CustomError.createCustomError({
+        name: ErrorName.ADMIN_NOT_PERMITTED,
+        message: ErrorMessage.ADMIN_NOT_PERMITTED,
+        cause: ErrorCause.admin_not_permitted,
+      });
+    }
     const cart = await getCartById(idCart);
     res.render("cart", {
       css: "style",
@@ -35,7 +41,13 @@ export async function getOneCartById(req, res) {
 export async function addOneCart(req, res) {
   const { tokenJwt } = req.cookies;
   try {
-    if (req.isAdmin) throw new Error("You can't do this");
+    if (req.isAdmin) {
+      CustomError.createCustomError({
+        name: ErrorName.ADMIN_NOT_PERMITTED,
+        message: ErrorMessage.ADMIN_NOT_PERMITTED,
+        cause: ErrorCause.admin_not_permitted,
+      });
+    }
     const newCart = await addCart(tokenJwt);
     res.json({ cart: newCart });
   } catch (error) {
@@ -81,14 +93,25 @@ export async function emptyOneCartById(req, res) {
   }
 }
 
-export async function deleteOneProductById(req, res) {
+export async function deleteOneProductById(req, res, next) {
   const { idCart, idProduct } = req.params;
   try {
-    if (req.isAdmin) throw new Error("You can't do this");
+    if (req.isAdmin) {
+      CustomError.createCustomError({
+        name: ErrorName.ADMIN_NOT_PERMITTED,
+        message: ErrorMessage.ADMIN_NOT_PERMITTED,
+        cause: ErrorCause.admin_not_permitted,
+      });
+    }
     const cart = await deleteProductById(idCart, idProduct);
     res.json({ cart });
   } catch (error) {
-    res.json({ status: 0, error: error.message });
+    logger.error({
+      name: err.name,
+      message: err.message,
+      cause: err.cause,
+    })
+    next(error)
   }
 }
 
@@ -106,13 +129,18 @@ export async function showTicket(req, res) {
   }
 }
 
-export async function createTicket(req, res) {
+export async function createTicket(req, res, next) {
   const { cId } = req.params;
   try {
     if (req.isAdmin) throw new Error("You can't do this");
     const ticket = await addTicket(cId);
     res.json({ ticket });
   } catch (error) {
-    res.json({ status: 0, error: error.message });
+    logger.error({
+      name: err.name,
+      message: err.message,
+      cause: err.cause,
+    })
+    next(error)
   }
 }

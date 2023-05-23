@@ -1,0 +1,397 @@
+paths:
+  /api/carts/{idCart}:
+    get:
+      summary: Get one cart
+      tags: 
+        - Carts
+      parameters: 
+      - name: idCart
+        in: path
+        required: true
+        description: Cart identifier
+        example: 6463036219d32620cc7d4c3d
+        schema:
+          $type: String
+      description: Return one cart by id
+      responses: 
+        '200':
+          description: Specific cart
+        '400':
+          description: Return nothing, some data is missing
+        '500':
+          description: Return error
+    put:
+      summary: Update one cart
+      tags: 
+        - Carts
+      parameters: 
+      - name: idProduct
+        in: path
+        required: true
+        description: Cart identifier
+        example: 6463036219d32620cc7d4c3d
+        schema:
+          $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/addOneProduct'
+      description: Add one product to cart and return the cart
+      responses: 
+        '200':
+          description: Added product
+          content: 
+            application/json:
+              example: 
+                time: "2023-05-22T10:00:00Z"
+                user: "user123"
+                products:
+                  - product: "product1"
+                    quantity: 2
+                  - product: "product2"
+                    quantity: 3
+        '400':
+          description: Return nothing, some data is missing
+          content: 
+            application/json:
+              schemas:
+                $ref: '#/components/schemas/Products'
+              example: 
+                name: Error in add product to cart
+                message: Something was wrong when you tried to add a product to cart
+                cause": quantity
+        '500':
+          description: Return error
+    delete:
+      summary: Empty one cart
+      tags: 
+        - Carts
+      parameters: 
+      - name: idProduct
+        in: path
+        required: true
+        description: Cart identifier
+        example: 6463036219d32620cc7d4c3d
+        schema:
+          $type: String
+      description: Empty the cart and return it
+      responses: 
+        '200':
+          description: Empty cart
+          content: 
+            application/json:
+              example: 
+                state: 1
+        '400':
+          description: Return nothing, some data is missing
+          content: 
+            application/json:
+              example: 
+                name: Error in empty the cart
+                message: Something was wrong when you tried to empty the cart
+                cause": incorrect id
+        '500':
+          description: Return error
+  /api/carts/add-cart:
+    post:
+      summary: Create cart
+      tags:
+        - Carts
+      description: Create one cart by token
+      responses: 
+        '200':
+          description: Cart created
+          content: 
+            application/json:
+              example: 
+                state: 1
+        '400':
+          description: Return nothing, some data is missing
+          content: 
+            application/json:
+              example: 
+                name: Error in create one cart
+                message: Something was wrong when you tried to create the cart
+                cause": error in token (invalid)
+        '500':
+          description: Return error
+  /api/carts/{idCart}/products/{idProduct}:
+    delete:
+      summary: Delete a product 
+      tags:
+        - Carts
+      parameters:
+      - name: idCart
+        in: path
+        required: true
+        description: Cart identifier
+        example: 6463036219d32620cc7d4c3d
+        schema:
+          $type: String
+      - name: idProduct
+        in: path
+        required: true
+        description: Product identifier
+        example: 6463037f19d32620cc7d4c40
+        schema:
+          $type: String
+      description: Delete a product from a cart
+      responses: 
+        '200':
+          description: Removed product
+          content: 
+            application/json:
+              example: 
+                state: 1
+        '400':
+          description: Return nothing, some data is missing
+          content: 
+            application/json:
+              example: 
+                name: Error in delete a product
+                message: Something was wrong when you tried to delete a product from the cart
+                cause": error in id product id (invalid)
+        '500':
+          description: Return error
+  # /api/products/{idProduct}:
+  #   get:
+  #     summary: Get one product
+  #     tags: 
+  #       - Products
+  #     parameters: 
+  #     - name: idProduct
+  #       in: path
+  #       required: true
+  #       description: Product identifier
+  #       example: 6463037f19d32620cc7d4c40
+  #       schema:
+  #         $type: String
+  #     description: Return one product by id
+  #     responses: 
+  #       '200':
+  #         description: Specific product
+  #         content: 
+  #           application/json:
+  #             schemas:
+  #               $ref: '#/components/schemas/Products'
+  #             example: 
+  #               id: 6463037f19d32620cc7d4c40
+  #               title: Mouse
+  #               des: It's a mouse
+  #               price: 99
+  #               thumbnail: mouse.jpg
+  #               stock: 1000
+  #               category: Hardware
+  #               status: true
+  #               owner: admin
+  #       '400':
+  #         description: Return nothing, some data is missing
+  #         content: 
+  #           application/json:
+  #             schemas:
+  #               $ref: '#/components/schemas/Products'
+  #             example: 
+  #               name: Error in get a product
+  #               message: Something was wrong when you tried to get a product
+  #               cause": id incorrect
+  #       '500':
+  #         description: Return error
+  #   put:
+  #     summary: Update one product
+  #     tags: 
+  #       - Products
+  #     parameters: 
+  #     - name: idProduct
+  #       in: path
+  #       required: true
+  #       description: Product identifier
+  #       example: 6463037f19d32620cc7d4c40
+  #       schema:
+  #         $type: String
+  #     requestBody:
+  #       required: true
+  #       content:
+  #         multipart/form-data:
+  #           schema:
+  #             $ref: '#/components/requestBodies/updateProduct'
+  #     description: Update and return one product 
+  #     responses: 
+  #       '200':
+  #         description: Changed product
+  #         content: 
+  #           application/json:
+  #             example: 
+  #               id: 6463037f19d32620cc7d4c40
+  #               title: Mouse
+  #               des: It's a mouse
+  #               price: 99
+  #               thumbnail: mouse.jpg
+  #               stock: 1000
+  #               category: Hardware
+  #               status: true
+  #               owner: admin
+  #       '400':
+  #         description: Return nothing, some data is missing
+  #         content: 
+  #           application/json:
+  #             schemas:
+  #               $ref: '#/components/schemas/Products'
+  #             example: 
+  #               name: Error in add Products
+  #               message: Something was wrong when you tried to add a product
+  #               cause": title field
+  #       '500':
+  #         description: Return error
+  #   delete:
+  #     summary: Delete one product
+  #     tags: 
+  #       - Products
+  #     parameters: 
+  #     - name: idProduct
+  #       in: path
+  #       required: true
+  #       description: Product identifier
+  #       example: 6463037f19d32620cc7d4c40
+  #       schema:
+  #         $type: String
+  #     description: Delete one product by id
+  #     responses: 
+  #       '200':
+  #         description: Specific product
+  #         content: 
+  #           application/json:
+  #             example: 
+  #               state: 1
+  #       '400':
+  #         description: Return nothing, some data is missing
+  #         content: 
+  #           application/json:
+  #             schemas:
+  #               $ref: '#/components/schemas/Products'
+  #             example: 
+  #               name: Error in delete a products
+  #               message: Something was wrong when you tried to delete a product
+  #               cause": id incorrect
+  #       '500':
+  #         description: Return error
+  # /api/products/add-product:
+  #   post:
+  #     summary: Add one product
+  #     tags: 
+  #       - Products
+  #     requestBody:
+  #       required: true
+  #       content:
+  #         multipart/form-data:
+  #           schema:
+  #             $ref: '#/components/requestBodies/addProduct'
+  #     description: Create and return one product 
+  #     responses: 
+  #       '200':
+  #         description: Added product
+  #         content: 
+  #           application/json:
+  #             example: 
+  #               id: 6463037f19d32620cc7d4c40
+  #               title: Mouse
+  #               des: It's a mouse
+  #               price: 99
+  #               thumbnail: mouse.jpg
+  #               stock: 1000
+  #               category: Hardware
+  #               status: true
+  #               owner: admin
+  #       '400':
+  #         description: Return nothing, some data is missing
+  #         content: 
+  #           application/json:
+  #             schemas:
+  #               $ref: '#/components/schemas/Products'
+  #             example: 
+  #               name: Error in add Products
+  #               message: Something was wrong when you tried to add a product
+  #               cause": title field
+  #       '500':
+  #         description: Return error
+components:
+  schemas:
+    Carts:
+      type: object
+      properties:
+        time: 
+          type: String
+          format: date-time
+          description: Creation date
+        user: 
+          type: String
+          description: Username
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: String
+                description: Product ID
+              quantity:
+                type: Number
+                description: Product quantity
+      example: 
+        time: "2023-05-22T10:00:00Z"
+        user: "user123"
+        products:
+          - product: "product1"
+            quantity: 2
+          - product: "product2"
+            quantity: 3
+  requestBodies:
+    addOneProduct:
+      type: object
+      properties:
+        idProduct: 
+          type: String
+          description: Product id
+          required: true
+        quantity: 
+          type: String
+          description: Product quantity
+          required: true
+      example: 
+        products:
+          - product: "product1Id"
+            quantity: 2
+          - product: "product2Id"
+            quantity: 3
+  #   updateProduct:
+  #     type: object
+  #     properties:
+  #       title: 
+  #         type: String
+  #         description: Product name
+  #       des: 
+  #         type: string
+  #         description: Product description
+  #       price:
+  #         type: number
+  #         description: Product number
+  #       thumbnail: 
+  #         type: file
+  #         format: binary
+  #         description: Product image
+  #       stock: 
+  #         type: Number
+  #         description: Product stock
+  #       category: 
+  #         type: String
+  #         description: Product category
+  #     example:
+  #       title: Monitor Gaming
+  #       des: it's a monitor
+  #       price: 1000
+  #       thumbnail: asdasd
+  #       stock: 1000
+  #       category: Hardware
+    
+

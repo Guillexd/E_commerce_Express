@@ -5,7 +5,7 @@ import {
   addOneUser,
   changeOnePassword,
   logoutUser,
-  changeOneRole,
+  changeRole,
 } from "../controller/user.controller.js";
 import { generateTokenAndSendEmailToChangePassword } from "../controller/email.controller.js";
 import passport from "passport";
@@ -83,7 +83,7 @@ router.post(
   changeOnePassword
 );
 
-router.get("/premiun/:uid", changeOneRole);
+router.get("/premiun/:uid", changeRole);
 
 router.get("/logout", logoutUser);
 

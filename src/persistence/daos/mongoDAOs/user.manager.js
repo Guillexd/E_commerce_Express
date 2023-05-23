@@ -26,14 +26,8 @@ export default class UserManager {
     return userModified;
   }
 
-  async changeRole(id) {
+  async getUserPremiunById(id) {
     const user = await userModel.findById(id);
-    const role = user.rol === "user" ? "premiun" : "user";
-    const userModified = await userModel.findByIdAndUpdate(
-      id,
-      { rol: role },
-      { new: true }
-    );
-    return userModified;
+    return user;
   }
 }

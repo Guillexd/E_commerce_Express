@@ -1,0 +1,276 @@
+paths:
+  /api/products:
+    get:
+      summary: Get All Products
+      tags: 
+        - Products
+      description: Return all products in database 
+      responses: 
+        '200':
+          description: All products
+        '400':
+          description: Return nothing, some data is missing
+        '500':
+          description: Return error
+  /api/products/{idProduct}:
+    get:
+      summary: Get one product
+      tags: 
+        - Products
+      parameters: 
+      - name: idProduct
+        in: path
+        required: true
+        description: Product identifier
+        example: 6463037f19d32620cc7d4c40
+        schema:
+          $type: String
+      description: Return one product by id
+      responses: 
+        '200':
+          description: Specific product
+          content: 
+            application/json:
+              schemas:
+                $ref: '#/components/schemas/Products'
+              example: 
+                id: 6463037f19d32620cc7d4c40
+                title: Mouse
+                des: It's a mouse
+                price: 99
+                thumbnail: mouse.jpg
+                stock: 1000
+                category: Hardware
+                status: true
+                owner: admin
+        '400':
+          description: Return nothing, some data is missing
+          content: 
+            application/json:
+              schemas:
+                $ref: '#/components/schemas/Products'
+              example: 
+                name: Error in get a product
+                message: Something was wrong when you tried to get a product
+                cause": id incorrect
+        '500':
+          description: Return error
+    put:
+      summary: Update one product
+      tags: 
+        - Products
+      parameters: 
+      - name: idProduct
+        in: path
+        required: true
+        description: Product identifier
+        example: 6463037f19d32620cc7d4c40
+        schema:
+          $type: String
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/requestBodies/updateProduct'
+      description: Update and return one product 
+      responses: 
+        '200':
+          description: Changed product
+          content: 
+            application/json:
+              example: 
+                id: 6463037f19d32620cc7d4c40
+                title: Mouse
+                des: It's a mouse
+                price: 99
+                thumbnail: mouse.jpg
+                stock: 1000
+                category: Hardware
+                status: true
+                owner: admin
+        '400':
+          description: Return nothing, some data is missing
+          content: 
+            application/json:
+              schemas:
+                $ref: '#/components/schemas/Products'
+              example: 
+                name: Error in add Products
+                message: Something was wrong when you tried to add a product
+                cause": title field
+        '500':
+          description: Return error
+    delete:
+      summary: Delete one product
+      tags: 
+        - Products
+      parameters: 
+      - name: idProduct
+        in: path
+        required: true
+        description: Product identifier
+        example: 6463037f19d32620cc7d4c40
+        schema:
+          $type: String
+      description: Delete one product by id
+      responses: 
+        '200':
+          description: Specific product
+          content: 
+            application/json:
+              example: 
+                state: 1
+        '400':
+          description: Return nothing, some data is missing
+          content: 
+            application/json:
+              schemas:
+                $ref: '#/components/schemas/Products'
+              example: 
+                name: Error in delete a products
+                message: Something was wrong when you tried to delete a product
+                cause": id incorrect
+        '500':
+          description: Return error
+  /api/products/add-product:
+    post:
+      summary: Add one product
+      tags: 
+        - Products
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/requestBodies/addProduct'
+      description: Create and return one product 
+      responses: 
+        '200':
+          description: Added product
+          content: 
+            application/json:
+              example: 
+                id: 6463037f19d32620cc7d4c40
+                title: Mouse
+                des: It's a mouse
+                price: 99
+                thumbnail: mouse.jpg
+                stock: 1000
+                category: Hardware
+                status: true
+                owner: admin
+        '400':
+          description: Return nothing, some data is missing
+          content: 
+            application/json:
+              schemas:
+                $ref: '#/components/schemas/Products'
+              example: 
+                name: Error in add Products
+                message: Something was wrong when you tried to add a product
+                cause": title field
+        '500':
+          description: Return error
+components:
+  schemas:
+    Products:
+      type: object
+      properties:
+        id:
+          type: String
+          description: mongoId
+        title: 
+          type: String
+          description: Product name
+        des: 
+          type: string
+          description: Product description
+        price:
+          type: number
+          description: Product number
+        thumbnail: 
+          type: String
+          description: Product image url
+        stock: 
+          type: Number
+          description: Product stock
+        category: 
+          type: String
+          description: Product category
+        status: 
+          type: Boolean
+          description: Product status
+        owner: 
+          type: String
+          description: Product owner
+      example: 
+        id: 6463037f19d32620cc7d4c40
+        title: Mouse
+        des: It's a mouse
+        price: 99
+        thumbnail: mouse.jpg
+        stock: 1000
+        category: Hardware
+        status: true
+        owner: admin
+  requestBodies:
+    addProduct:
+      type: object
+      properties:
+        title: 
+          type: String
+          description: Product name
+          required: true
+        des: 
+          type: string
+          description: Product description
+          required: true
+        price:
+          type: number
+          description: Product number
+          required: true
+        thumbnail: 
+          type: file
+          format: binary
+          description: Product image
+          required: true
+        stock: 
+          type: Number
+          description: Product stock
+          required: true
+        category: 
+          type: String
+          description: Product category
+          required: true
+    updateProduct:
+      type: object
+      properties:
+        title: 
+          type: String
+          description: Product name
+        des: 
+          type: string
+          description: Product description
+        price:
+          type: number
+          description: Product number
+        thumbnail: 
+          type: file
+          format: binary
+          description: Product image
+        stock: 
+          type: Number
+          description: Product stock
+        category: 
+          type: String
+          description: Product category
+      example:
+        title: Monitor Gaming
+        des: it's a monitor
+        price: 1000
+        thumbnail: asdasd
+        stock: 1000
+        category: Hardware
+    
+

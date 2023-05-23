@@ -1,4 +1,5 @@
-import { getUserByEmail, addUser, changePassword, changeRole } from "../services/user.services.js";
+import { getUserByEmail, addUser, changePassword, getUserPremiunById } from "../services/user.services.js";
+import { verifyToken, generateToken } from "../utils/utils.js";
 
 export async function getOneUserByEmail(req, res) {
   const { email, password } = req.body;
@@ -51,11 +52,17 @@ export async function changeOnePassword(req, res) {
   }
 }
 
-export async function changeOneRole(req, res) {
+export async function changeRole(req, res) {
   const { uid } = req.params;
   try {
-    const newUser = await changeRole(uid);
-    return res.clearCookie("tokenJwt").redirect("/");
+    const isPremiun = await getUserPremiunById(uid);
+    const {user} = verifyToken(req.cookies.tokenJwt)
+    let token;
+    if(user && isPremiun.rol === "premiun") {
+      user.rol == "premiun" ? user.rol = "user" : user.rol = "premiun";
+      token = generateToken(user)
+    }
+    return res.cookie('tokenJwt', token, {httpOnly: true, maxAge: 1000 * 60 * 60}).redirect("/api/products");
   } catch (error) {
     return res.json({
       name: error.name,

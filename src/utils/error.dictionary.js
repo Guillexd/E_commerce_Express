@@ -2,7 +2,8 @@ export const ErrorName = {
   PRODUCT_ERROR_POST: "Error in add Products",
   USER_ERROR_CHANGE_PASSWORD_POST: "Error in change password",
   ROLE_ERROR: "No role",
-  NOT_PERMITION: "Not permited"
+  NOT_PERMITION: "Not permited",
+  ADMIN_NOT_PERMITTED: "Not allowed"
 };
 
 export const ErrorMessage = {
@@ -10,7 +11,8 @@ export const ErrorMessage = {
   USER_ERROR_CHANGE_EQUAL_PASSWORD_POST: "Password was the same as the current one",
   USER_ERROR_CHANGE_DIFFERENT_PASSWORD_POST: "Passwords were different",
   ROLE_ERROR: "There's no rol",
-  NOT_PERMITION: "You are not permited to do this"
+  NOT_PERMITION: "You are not permited to do this",
+  ADMIN_NOT_PERMITTED: "You can't do this"
 };
 
 export const ErrorCause = {
@@ -24,5 +26,6 @@ export const ErrorCause = {
   status: "status field",
   password_change_password_post: "Password field",
   role_req: "No rol in request",
-  not_permition: "no access"
+  not_permition: "no access",
+  admin_not_permitted: "You can make a purchase"
 };
