@@ -59,7 +59,7 @@ export async function addOneProductToCart(req, res, next) {
   const { idCart } = req.params;
   const { idProduct, quantity } = req.body;
   try {
-    if (!(req.isAdmin || req.isPremiun)) {
+    if ((req.isAdmin)) {
       CustomError.createCustomError({
         name: ErrorName.PRODUCT_ERROR_POST,
         message: ErrorMessage.PRODUCT_ERROR_POST,

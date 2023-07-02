@@ -1,5 +1,10 @@
 import { userDao } from "../persistence/daos/factory.js";
 
+export async function getUsers() {
+  const users = await userDao.getUsers();
+  return users;
+}
+
 export async function getUserByEmail(email, password) {
   const user = await userDao.getUserByEmail(email, password);
   return user;

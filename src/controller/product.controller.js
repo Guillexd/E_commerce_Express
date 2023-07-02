@@ -13,6 +13,7 @@ import {
   ErrorCause,
 } from "../utils/error.dictionary.js";
 import logger from "../utils/winston.js";
+import { transporter } from "../messages/nodemailer.js";
 
 //Here you must validate data because you can use req and res instead of router itself
 
@@ -236,7 +237,22 @@ export async function deleteOneProductById(req, res, next) {
         cause: ErrorCause.not_permition,
       });
     }
-    const productDeleted = await deleteProductById(idProduct);
+    if(isFromPremiunUser.owner == req.user.email && req.user.rol == "admin") {
+      try {
+          await transporter.sendMail({
+              to: [req.user.email],
+              subject: subject,
+              html: '<h1>Warning<h1>',
+              text: 'Your product was deleted'
+          })
+          res.json({ status: 1, message: 'Product deleted' });
+      } catch (error) {
+          logger.error(error)
+          res.json({ status: 0, error: error.message });
+      }
+    }
+
+    await deleteProductById(idProduct);
     res.json({ state: 1 });
   } catch (err) {
     logger.error({

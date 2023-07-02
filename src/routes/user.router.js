@@ -6,11 +6,14 @@ import {
   changeOnePassword,
   logoutUser,
   changeRole,
+  getAllUsers,
 } from "../controller/user.controller.js";
 import { generateTokenAndSendEmailToChangePassword } from "../controller/email.controller.js";
 import passport from "passport";
 
 const router = Router();
+
+router.get("/", getAllUsers);
 
 //It must be POST to recive data from req.body
 router.post("/login", getOneUserByEmail);

@@ -1,5 +1,14 @@
-import { getUserByEmail, addUser, changePassword, getUserPremiunById } from "../services/user.services.js";
+import { getUsers, getUserByEmail, addUser, changePassword, getUserPremiunById } from "../services/user.services.js";
 import { verifyToken, generateToken } from "../utils/utils.js";
+
+export async function getAllUsers(req, res) {
+  try {
+    const users = await getUsers();
+    return res.json(users);
+  } catch (err) {
+    return res.redirect("/api/products");
+  }
+}
 
 export async function getOneUserByEmail(req, res) {
   const { email, password } = req.body;

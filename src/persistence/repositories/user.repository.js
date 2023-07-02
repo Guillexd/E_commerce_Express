@@ -1,4 +1,4 @@
-import { userResponse } from "../dtos/user.dtos.js";
+import { userResponse, usersResponse } from "../dtos/user.dtos.js";
 import {
   comparePasswords,
   generateToken,
@@ -16,10 +16,11 @@ export default class UserRepository {
     this.dao = dao;
   }
 
-  //   async getUsers(){
-  //     const usersDao = await this.dao.getUsers();
-  //     return usersDao;
-  //   }
+  async getUsers(){
+    const usersDao = await this.dao.getUsers();
+    const dataUsers = usersResponse(usersDao)
+    return dataUsers;
+  }
 
   async getUserByEmail(email, password) {
     const userDao = await this.dao.getUserByEmail(email);

@@ -17,7 +17,9 @@
       class="btn btn-success"
       onclick="location.href='/view/nodemailer'"
     >Send an email</button>
-    <a style="z-index: 990;" class="btn btn-success mt-2" href="/user/premiun/{{user._id}}">Change role: {{user.rol}}</a>
+    {{#if isPremiun}}
+      <a style="z-index: 990;" class="btn btn-success mt-2" href="/user/premiun/{{user._id}}">Change role: {{user.rol}}</a>
+    {{/if}}
   {{/if}}
   <a style="z-index: 989;" class="btn btn-dark mt-2" href="/api/docs">Documentation</a>
 </div>
